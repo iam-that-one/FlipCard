@@ -22,6 +22,8 @@ struct ContentView_Previews: PreviewProvider {
 }
 
 struct FlippedCard: View {
+    @State var scale : CGFloat = 1
+    @State var scale2 : CGFloat = 1.3
     @State var rotationAmount : Double = 0
     var side1 : Text
     var side2 : Text
@@ -31,6 +33,7 @@ struct FlippedCard: View {
             RoundedRectangle(cornerRadius: 10)
                 .frame(width: 230, height: 330)
                 .foregroundColor(isFlipped ? .yellow.opacity(0.80) : .blue)
+                .scaleEffect(isFlipped ? scale2: scale)
                 .overlay(
                     VStack{
                         if !isFlipped{
@@ -57,9 +60,15 @@ struct FlippedCard: View {
                     rotationAmount = rotationAmount + 180
                     withAnimation(.linear(duration: 0.5)){
                     isFlipped.toggle()
-                      
+                        DispatchQueue.main.asyncAfter(deadline: .now()+0.2) {
+                            withAnimation(){
+                            scale2 = scale
+                            }
+                        }
                     }
+                    scale2 = 1.3
                     rotationAmount = 0
+                 
                 }
                 .rotation3DEffect(
                     Angle.degrees(isFlipped ? rotationAmount: 0),
