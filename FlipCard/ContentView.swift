@@ -20,7 +20,6 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
-
 struct FlippedCard: View {
     @State var scale : CGFloat = 1
     @State var scale2 : CGFloat = 1.3
@@ -37,46 +36,43 @@ struct FlippedCard: View {
                 .overlay(
                     VStack{
                         if !isFlipped{
-                        side1
-                            .font(.title)
-                            .foregroundColor(.white)
-                            .rotation3DEffect(
-                                Angle.degrees(!isFlipped ? -rotationAmount:0),
-                                axis: (x: 0.0, y: 0.1, z: 0.0)
-                            )
+                            side1
+                                .font(.title)
+                                .foregroundColor(.white)
+                                .rotation3DEffect(
+                                    Angle.degrees(!isFlipped ? -rotationAmount:0),
+                                    axis: (x: 0.0, y: 0.1, z: 0.0)
+                                )
                         }
                         if isFlipped{
-                        side2
-                            .font(.title)
-                            .foregroundColor(.white)
-                            .rotation3DEffect(
-                                Angle.degrees(isFlipped ? -rotationAmount:0),
-                                axis: (x: 0.0, y: 0.1, z: 0.0)
-                            )
+                            side2
+                                .font(.title)
+                                .foregroundColor(.white)
+                                .rotation3DEffect(
+                                    Angle.degrees(isFlipped ? -rotationAmount:0),
+                                    axis: (x: 0.0, y: 0.1, z: 0.0)
+                                )
                         }
                     }
                 )
                 .onTapGesture {
                     rotationAmount = rotationAmount + 180
                     withAnimation(.linear(duration: 0.5)){
-                    isFlipped.toggle()
+                        isFlipped.toggle()
                         DispatchQueue.main.asyncAfter(deadline: .now()+0.2) {
                             withAnimation(){
-                            scale2 = scale
+                                scale2 = scale
                             }
                         }
                     }
                     scale2 = 1.3
                     rotationAmount = 0
-                 
+                    
                 }
                 .rotation3DEffect(
                     Angle.degrees(isFlipped ? rotationAmount: 0),
                     axis: (x: 0.0, y: 0.1, z: 0.0)
                 )
-                
-                //
-                
         }
     }
 }
